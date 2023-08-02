@@ -36,10 +36,10 @@ jobs:
            index='scan-results/index.json'
            cat 
             {
-              echo ''
+              echo '${{ github.ref }}'
               echo "const createdAt = $(date +%s);"
-              echo "${{ github.event.sha }}"
-              echo "${{ github.event.event_path }}"
+              echo "$(github.event.sha)"
+              echo "${github.event.event_path}"
             } >>"$index"
 
             echo "$index has been created!"
