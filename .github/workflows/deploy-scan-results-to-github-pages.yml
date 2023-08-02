@@ -31,6 +31,16 @@ jobs:
             } >>"$reportName"
 
             echo "$reportName has been created!"
+      - name: aa
+        run: |
+           index='scan-results/index.json'
+           cat 
+            {
+              echo ''
+              echo "${{ github.event }}"
+            } >>"$index"
+
+            echo "$index has been created!"
             
 
       - name: Deploy 🚀
