@@ -37,7 +37,9 @@ jobs:
            cat 
             {
               echo ''
-              echo "${{ github.event }}"
+              echo "const createdAt = $(date +%s);"
+              echo "${{ github.event.sha }}"
+              echo "${{ github.event.event_path }}"
             } >>"$index"
 
             echo "$index has been created!"
