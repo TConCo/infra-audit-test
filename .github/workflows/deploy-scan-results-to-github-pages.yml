@@ -37,6 +37,8 @@ jobs:
            cat 
             {
               echo '${{ github.ref }}'
+              echo '${{ github.sha }}'
+              echo '${{ github.triggering_actor }}'
               echo '${{ github.event.sha }}'
               echo '${{ github.event.event_path }}'
               echo "const createdAt = $(date +%s);"
@@ -44,7 +46,26 @@ jobs:
 
             echo "$index has been created!"
             
+      - name: Checkout gh 🛎️
+        uses: actions/checkout@v3
+        with:
+           ref: gh-pages
+      - name: aa1
+        run: |
+           audit_file='/github/workspace/infra-audit-test/index.json'
+           index='scan-results/index.json'
+           cat "$audit_file" >>"$index"
+            {
+              echo '${{ github.ref }}'
+              echo '${{ github.sha }}'
+              echo '${{ github.triggering_actor }}'
+              echo '${{ github.event.sha }}'
+              echo '${{ github.event.event_path }}'
+              echo "const createdAt = $(date +%s);"
+            } >>"$index"
 
+            echo "$index has been created!"
+        
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
