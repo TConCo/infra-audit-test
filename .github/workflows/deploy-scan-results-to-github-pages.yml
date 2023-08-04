@@ -53,6 +53,7 @@ jobs:
       - name: aa1
         run: |
            audit_file='/github/workspace/infra-audit-test/index.json'
+           echo "$audit_file has been created!"
            index='scan-results/index.json'
            cat "$audit_file" >>"$index"
             {
