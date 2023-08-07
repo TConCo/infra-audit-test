@@ -35,7 +35,6 @@ jobs:
            scan_index='scan-results/scan_index.json'
            cat 
            {
-              echo ','
               echo '{'
               echo '${{ github.ref }}'
               echo '${{ github.sha }}'
@@ -43,7 +42,7 @@ jobs:
               echo '${{ github.event.sha }}'
               echo '${{ github.event.event_path }}'
               echo "const createdAt = $(date +%s);"
-              echo '}'
+              echo '},'
             }  >>"$scan_index"
 
             echo "$scan_index has been created!"
@@ -71,6 +70,11 @@ jobs:
            head -n -1 "$audit_file" > "$index"
            #cat "$audit_file" >>"$index"
            cat "$scan_index" >>"$index"
+           cat 
+           {
+              echo ''
+              echo '}'
+            } >>"$index"
            echo "$index has been created!"
            rm -f $scan_index
         
