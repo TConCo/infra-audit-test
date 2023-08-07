@@ -42,7 +42,7 @@ jobs:
            cat 
            {
               echo '{'
-              echo '"Id": "${{ DAY_OF_WEEK }}"'
+              echo '"Id": "$DAY_OF_WEEK"'
               echo '"Sha": "${{ github.sha }}"'
               echo '"Initiator": "${{ github.triggering_actor }}"'
               echo '"Ref": "${{ github.ref }}"'
