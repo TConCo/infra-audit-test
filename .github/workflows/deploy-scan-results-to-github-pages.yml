@@ -17,22 +17,15 @@ jobs:
     env:
       Greeting: $(date +%s)
     steps:
-      - name: outputtest1
+      - name: Set the time
         run: |
-          echo "mix-ecto_create=$(date +%s)" >> $GITHUB_OUTPUT
+          echo "ACTION_START_TIME=$(date +%s)" >> $GITHUB_OUTPUT
         id: run_tests
-      - name: outputtest2
-        if: always()
-        run: |
-          echo ${{steps.run_tests.outputs.mix-ecto_create}}
-          echo ${{join(steps.run_tests.outputs.*, '\n')}}
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - name: Creating scan results
         run: |
-          Greeting=$(date +%s);
-          DAY_OF_WEEK=$(date +%Y%m%d%H%M%S);
-          reportName='scan-results/result.json'
+          reportName='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
            cat 
             {
               echo ''
