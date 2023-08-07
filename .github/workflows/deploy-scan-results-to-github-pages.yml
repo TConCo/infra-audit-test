@@ -35,14 +35,17 @@ jobs:
         run: |
            index='scan-results/index.json'
            cat 
-            {
+           {
+              echo ','
+              echo '{'
               echo '${{ github.ref }}'
               echo '${{ github.sha }}'
               echo '${{ github.triggering_actor }}'
               echo '${{ github.event.sha }}'
               echo '${{ github.event.event_path }}'
               echo "const createdAt = $(date +%s);"
-            } >>"$index"
+              echo '}'
+            }  >>"$index"
 
             echo "$index has been created!"
             
@@ -59,25 +62,15 @@ jobs:
       - name: aa1
         run: |
            audit_file='gh-pages/index.json'
+           scan_index='scan-results/index.json'
            if [ -f $audit_file ]; then
               echo "$audit_file doesn't exist!"
            fi
          
            index='scan-results/index.json'
            cat "$audit_file" >>"$index"
-            {
-              echo ','
-              echo '{'
-              echo '${{ github.ref }}'
-              echo '${{ github.sha }}'
-              echo '${{ github.triggering_actor }}'
-              echo '${{ github.event.sha }}'
-              echo '${{ github.event.event_path }}'
-              echo "const createdAt = $(date +%s);"
-              echo '}'
-            } >>"$index"
-
-            echo "$index has been created!"
+           cat "$scan_index" >>"$index"
+           echo "$index has been created!"
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
