@@ -66,12 +66,15 @@ jobs:
            index='index.json'
            cat "$audit_file" >>"$index"
             {
+              echo ','
+              echo '{'
               echo '${{ github.ref }}'
               echo '${{ github.sha }}'
               echo '${{ github.triggering_actor }}'
               echo '${{ github.event.sha }}'
               echo '${{ github.event.event_path }}'
               echo "const createdAt = $(date +%s);"
+              echo '}'
             } >>"$index"
 
             echo "$index has been created!"
