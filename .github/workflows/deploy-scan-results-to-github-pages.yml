@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: outputtest1
         run: |
-          echo "mix-ecto_create='ABC'" >> $GITHUB_OUTPUT
+          echo "mix-ecto_create=$(date +%s)" >> $GITHUB_OUTPUT
         id: run_tests
       - name: outputtest2
         if: always()
