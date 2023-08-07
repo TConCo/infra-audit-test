@@ -17,6 +17,16 @@ jobs:
     env:
       Greeting: $(date +%s)
     steps:
+      - name: outputtest1
+        run: |
+          ls
+          echo "mix-ecto_create='ABC'" >> $GITHUB_OUTPUT
+          id: run_tests
+      - name: outputtest2
+        if: always()
+        run: |
+          echo ${{steps.run_tests.outputs.mix-ecto_create}}
+          echo ${{join(steps.run_tests.outputs.*, '\n')}}
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - name: Creating scan results
