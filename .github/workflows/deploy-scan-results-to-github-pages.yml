@@ -55,6 +55,12 @@ jobs:
             }  >>"$scan_index"
 
             echo "$scan_index has been created!"
+
+      - name: Storing push event details
+        run: |
+           event_detail="event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json"
+           cat ${{ github.event_path }}>>"$event_detail" 
+           echo "$scan_index has been created!"
             
       - name: Checkout gh 🛎️
         uses: actions/checkout@v3
