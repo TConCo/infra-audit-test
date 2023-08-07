@@ -52,18 +52,18 @@ jobs:
            ref: gh-pages
            path: gh-pages
       - run: |
-          audit_file='/gh-pages/index.json'
+          audit_file='gh-pages/index.json'
           if [ -f $audit_file ]; then
               echo "$audit_file doesn't exist!"
            fi
       - name: aa1
         run: |
-           audit_file='/gh-pages/index.json'
+           audit_file='gh-pages/index.json'
            if [ -f $audit_file ]; then
               echo "$audit_file doesn't exist!"
            fi
          
-           index='index.json'
+           index='scan-results/index.json'
            cat "$audit_file" >>"$index"
             {
               echo ','
