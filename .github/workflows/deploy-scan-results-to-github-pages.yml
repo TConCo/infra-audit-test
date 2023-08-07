@@ -22,6 +22,11 @@ jobs:
         id: run_tests
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+      - name: Run Trivy vulnerability scanner in fs mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
       - name: Creating scan results
         run: |
           reportName='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
