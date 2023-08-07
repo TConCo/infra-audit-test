@@ -79,4 +79,4 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: scan-results # The folder the action should deploy.
+          folder: /home/runner/work/main/infra-audit-test/infra-audit-test/scan-results
