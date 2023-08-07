@@ -43,11 +43,9 @@ jobs:
       - name: Storing push event details
         id: store_event_details
         run: |
-           PUSH_EVENT_DETAIL='scan-results/event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
+           PUSH_EVENT_DETAIL='event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
            echo "PUSH_EVENT_DETAIL=$PUSH_EVENT_DETAIL" >> $GITHUB_OUTPUT
-           cat ${{ github.event_path }}>>"$PUSH_EVENT_DETAIL" 
-           echo "$scan_index has been created!"
-           
+           cat ${{ github.event_path }}>>"scan-results/$PUSH_EVENT_DETAIL"            
       - name: Creating Scan Details
         run: |
            cat 
