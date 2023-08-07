@@ -12,12 +12,9 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-        with:
-          path: main
-
       - name: Creating scan results
         run: |
-          reportName='main/scan-results/result.json'
+          reportName='scan-results/result.json'
            cat 
             {
               echo ''
@@ -35,7 +32,7 @@ jobs:
             echo "$reportName has been created!"
       - name: Creating Scan Details
         run: |
-           scan_index='main/scan-results/scan_index.json'
+           scan_index='scan-results/scan_index.json'
            cat 
            {
               echo ','
@@ -59,7 +56,7 @@ jobs:
       - name: Adding Scan Details to Audit db
         run: |
            audit_file='gh-pages/index.json'
-           scan_index='main/scan-results/scan_index.json'
+           scan_index='scan-results/scan_index.json'
       
            if [ ! -f $audit_file ]; then
               echo "$audit_file doesn't exist, creating an empty one!"
@@ -70,7 +67,7 @@ jobs:
               }  >>"$audit_file"
            fi
          
-           index='main/scan-results/index.json'
+           index='scan-results/index.json'
            cat "$audit_file" >>"$index"
            cat "$scan_index" >>"$index"
            echo "$index has been created!"
@@ -79,4 +76,4 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: /home/runner/work/main/infra-audit-test/infra-audit-test/scan-results
+          folder: scan-results
