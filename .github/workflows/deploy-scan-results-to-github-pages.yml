@@ -6,16 +6,15 @@ on:
       - main
 permissions:
   contents: write
-  
 env:
-  DAY_OF_WEEK: $(date +%Y%m%d%H%M%S)
+  scan_index: 'scan-results/scan_index.json'
+  audit_file: 'gh-pages/index.json'
+  index: 'scan-results/index.json'
   
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
-    env:
-      Greeting: $(date +%s)
     steps:
       - name: Set the time
         run: |
@@ -43,9 +42,6 @@ jobs:
             echo "$reportName has been created!"
       - name: Creating Scan Details
         run: |
-           scan_index='scan-results/scan_index.json'
-           echo "DAY_OF_WEEK: $DAY_OF_WEEK"
-           echo "Greeting: $Greeting"
            cat 
            {
               echo '{'
@@ -66,10 +62,7 @@ jobs:
            ref: gh-pages
            path: gh-pages
       - name: Adding Scan Details to Audit db
-        run: |
-           audit_file='gh-pages/index.json'
-           scan_index='scan-results/scan_index.json'
-            
+        run: |         
            if [ ! -f $audit_file ]; then
               echo "$audit_file doesn't exist, creating an empty one!"
               cat 
@@ -80,10 +73,8 @@ jobs:
                 
               }  >>"$audit_file"
            fi
-         
-           index='scan-results/index.json'
+           # copy audit file except the last line which is '}' character of json 
            head -n -1 "$audit_file" > "$index"
-           #cat "$audit_file" >>"$index"
            cat "$scan_index" >>"$index"
            cat 
            {
@@ -91,6 +82,7 @@ jobs:
               echo ']}'
             } >>"$index"
            echo "$index has been created!"
+           # remove tmp
            rm -f $scan_index
         
       - name: Deploy 🚀
