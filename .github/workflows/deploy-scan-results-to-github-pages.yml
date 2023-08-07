@@ -50,10 +50,18 @@ jobs:
         uses: actions/checkout@v3
         with:
            ref: gh-pages
+           path: gh-pages
+      - run: |
+          audit_file='/github/workspace/infra-audit-test/index.json'
+          file_exists= -f $audit_file
+          echo "Exists : $file_exists"
       - name: aa1
         run: |
            audit_file='/github/workspace/infra-audit-test/index.json'
-           echo "$audit_file has been created!"
+           if [ -f $audit_file ]; then
+              echo "$audit_file doesn't exist!"
+           fi
+         
            index='index.json'
            cat "$audit_file" >>"$index"
             {
