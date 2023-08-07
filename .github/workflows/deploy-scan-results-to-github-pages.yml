@@ -19,7 +19,6 @@ jobs:
     steps:
       - name: outputtest1
         run: |
-          ls
           echo "mix-ecto_create='ABC'" >> $GITHUB_OUTPUT
           id: run_tests
       - name: outputtest2
