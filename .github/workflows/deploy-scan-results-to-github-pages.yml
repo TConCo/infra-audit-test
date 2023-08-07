@@ -33,7 +33,7 @@ jobs:
             echo "$reportName has been created!"
       - name: aa
         run: |
-           index='scan-results/index.json'
+           scan_index='scan-results/scan_index.json'
            cat 
            {
               echo ','
@@ -45,9 +45,9 @@ jobs:
               echo '${{ github.event.event_path }}'
               echo "const createdAt = $(date +%s);"
               echo '}'
-            }  >>"$index"
+            }  >>"$scan_index"
 
-            echo "$index has been created!"
+            echo "$scan_index has been created!"
             
       - name: Checkout gh 🛎️
         uses: actions/checkout@v3
@@ -62,7 +62,7 @@ jobs:
       - name: aa1
         run: |
            audit_file='gh-pages/index.json'
-           scan_index='scan-results/index.json'
+           scan_index='scan-results/scan_index.json'
            if [ -f $audit_file ]; then
               echo "$audit_file doesn't exist!"
            fi
