@@ -52,12 +52,13 @@ jobs:
            ref: gh-pages
            path: gh-pages
       - run: |
-          audit_file='/github/workspace/infra-audit-test/index.json'
-          file_exists= -f $audit_file
-          echo "Exists : $file_exists"
+          audit_file='/home/runner/work/infra-audit-test/infra-audit-test/gh-pages/index.json'
+          if [ -f $audit_file ]; then
+              echo "$audit_file doesn't exist!"
+           fi
       - name: aa1
         run: |
-           audit_file='/github/workspace/infra-audit-test/index.json'
+           audit_file='/home/runner/work/infra-audit-test/infra-audit-test/gh-pages/index.json'
            if [ -f $audit_file ]; then
               echo "$audit_file doesn't exist!"
            fi
