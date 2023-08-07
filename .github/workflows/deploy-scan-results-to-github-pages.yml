@@ -56,17 +56,18 @@ jobs:
         with:
            ref: gh-pages
            path: gh-pages
-      - run: |
-          audit_file='gh-pages/index.json'
-          if [ -f $audit_file ]; then
-              echo "$audit_file doesn't exist!"
-           fi
       - name: Adding Scan Details to Audit db
         run: |
            audit_file='gh-pages/index.json'
            scan_index='main/scan-results/scan_index.json'
-           if [ -f $audit_file ]; then
-              echo "$audit_file doesn't exist!"
+      
+           if [ ! -f $audit_file ]; then
+              echo "$audit_file doesn't exist, creating an empty one!"
+              cat 
+               {
+                echo '{'
+                echo '}'
+              }  >>"$audit_file"
            fi
          
            index='main/scan-results/index.json'
