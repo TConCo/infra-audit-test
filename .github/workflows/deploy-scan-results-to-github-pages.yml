@@ -39,6 +39,7 @@ jobs:
       - name: Creating Scan Details
         run: |
            scan_index='scan-results/scan_index.json'
+           echo "DAY_OF_WEEK: $DAY_OF_WEEK"
            cat 
            {
               echo '{'
