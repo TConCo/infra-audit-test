@@ -8,7 +8,7 @@ permissions:
   contents: write
   
 env:
-  time_now: dfdf
+  DAY_OF_WEEK: Monday
   
 jobs:
   build-and-deploy:
