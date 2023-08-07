@@ -8,7 +8,7 @@ permissions:
   contents: write
   
 env:
-  DAY_OF_WEEK: Monday
+  DAY_OF_WEEK: $(date +%Y%m%d%H%M%S)
   
 jobs:
   build-and-deploy:
