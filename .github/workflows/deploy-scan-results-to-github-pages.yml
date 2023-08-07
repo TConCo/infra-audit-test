@@ -57,7 +57,7 @@ jobs:
         run: |
            audit_file='gh-pages/index.json'
            scan_index='scan-results/scan_index.json'
-      
+            
            if [ ! -f $audit_file ]; then
               echo "$audit_file doesn't exist, creating an empty one!"
               cat 
@@ -68,7 +68,8 @@ jobs:
            fi
          
            index='scan-results/index.json'
-           cat "$audit_file" >>"$index"
+           head -n -1 "$audit_file" > "$index"
+           #cat "$audit_file" >>"$index"
            cat "$scan_index" >>"$index"
            echo "$index has been created!"
            rm -f $scan_index
