@@ -40,6 +40,14 @@ jobs:
             } >>"$reportName"
 
             echo "$reportName has been created!"
+      - name: Storing push event details
+        id: store_event_details
+        run: |
+           PUSH_EVENT_DETAIL='scan-results/event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
+           echo "PUSH_EVENT_DETAIL=$PUSH_EVENT_DETAIL" >> $GITHUB_OUTPUT
+           cat ${{ github.event_path }}>>"$PUSH_EVENT_DETAIL" 
+           echo "$scan_index has been created!"
+           
       - name: Creating Scan Details
         run: |
            cat 
@@ -50,18 +58,11 @@ jobs:
               echo '"Initiator": "${{ github.triggering_actor }}"'
               echo '"Ref": "${{ github.ref }}"'
               echo '"Event_Name": "${{ github.event_name }}"'
-              echo '"Event_Path": "${{ github.event_path }}"'
+              echo '"Event_Path": "${{ steps.store_event_details.outputs.PUSH_EVENT_DETAIL }}"'
               echo '},'
             }  >>"$scan_index"
 
-            echo "$scan_index has been created!"
-
-      - name: Storing push event details
-        run: |
-           event_detail='scan-results/event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
-           cat ${{ github.event_path }}>>"$event_detail" 
-           echo "$scan_index has been created!"
-            
+            echo "$scan_index has been created!"            
       - name: Checkout gh 🛎️
         uses: actions/checkout@v3
         with:
