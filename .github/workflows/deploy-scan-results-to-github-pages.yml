@@ -33,7 +33,7 @@ jobs:
               echo "const resultJson = "
               echo "</script>"
               echo "<script>"
-              echo "const createdAt = $(date +%s);"
+              echo "const createdAt = ${{steps.run_tests.outputs.ACTION_START_TIME}};"
               echo "init();"
               echo "</script>"
               echo "</body>"
