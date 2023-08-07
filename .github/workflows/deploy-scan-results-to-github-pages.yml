@@ -5,6 +5,8 @@ on:
       - main
 permissions:
   contents: write
+env:
+  time_now: $(date +%s)
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
@@ -14,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Creating scan results
         run: |
-          reportName='scan-results/result.json'
+          reportName='scan-results/result-${{ time_now }}.json'
            cat 
             {
               echo ''
@@ -36,12 +38,12 @@ jobs:
            cat 
            {
               echo '{'
-              echo '${{ github.ref }}'
-              echo '${{ github.sha }}'
-              echo '${{ github.triggering_actor }}'
-              echo '${{ github.event.sha }}'
-              echo '${{ github.event.event_path }}'
-              echo "const createdAt = $(date +%s);"
+              echo '"Id": "${{ time_now }}"'
+              echo '"Sha": "${{ github.sha }}"'
+              echo '"Initiator": "${{ github.triggering_actor }}"'
+              echo '"Ref": "${{ github.ref }}"'
+              echo '"Event_Name": "${{ github.event_name }}"'
+              echo '"Event_Path": "${{ github.event_path }}"'
               echo '},'
             }  >>"$scan_index"
 
@@ -62,7 +64,9 @@ jobs:
               cat 
                {
                 echo '{'
-                echo '}'
+                echo '"Pushes" : ['
+                echo ']}'
+                
               }  >>"$audit_file"
            fi
          
@@ -73,7 +77,7 @@ jobs:
            cat 
            {
               echo ''
-              echo '}'
+              echo ']}'
             } >>"$index"
            echo "$index has been created!"
            rm -f $scan_index
