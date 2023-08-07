@@ -20,6 +20,7 @@ jobs:
       - name: Creating scan results
         run: |
           time_now=$(date +%s)
+          
           reportName='scan-results/result-${{ time_now }}.json'
            cat 
             {
