@@ -30,25 +30,11 @@ jobs:
           hide-progress: false
           format: 'json'
           output: 'results.json'
-      - name: Creating scan results
+      - name: Storing scan results
         run: |
           reportName='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
           cat "results.json" >>"$reportName"
-           cat 
-            {
-              echo ''
-              echo "<script>"
-              echo "const resultJson = "
-              echo "</script>"
-              echo "<script>"
-              echo "const createdAt = ${{steps.run_tests.outputs.ACTION_START_TIME}};"
-              echo "init();"
-              echo "</script>"
-              echo "</body>"
-              echo "</html>"
-            } >>"$reportName"
-
-            echo "$reportName has been created!"
+          echo "$reportName has been created!"
       - name: Storing push event details
         id: store_event_details
         run: |
