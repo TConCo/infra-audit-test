@@ -33,6 +33,7 @@ jobs:
       - name: Creating scan results
         run: |
           reportName='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
+          cat "results.json" >>"$reportName"
            cat 
             {
               echo ''
