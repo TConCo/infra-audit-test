@@ -27,6 +27,9 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '.'
+          hide-progress: false
+          format: 'json'
+          output: 'results.json'
       - name: Creating scan results
         run: |
           reportName='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
