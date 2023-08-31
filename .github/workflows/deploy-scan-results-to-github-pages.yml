@@ -18,10 +18,11 @@ jobs:
     steps:
       - name: Set the time
         run: |
-          echo "ACTION_START_TIME=$(date +%s)" >> $GITHUB_OUTPUT
-          SCAN_RESULT='scan-results/result-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
+          ACTION_START_TIME=$(date +%s)
+          echo "ACTION_START_TIME=$ACTION_START_TIME" >> $GITHUB_OUTPUT
+          SCAN_RESULT='scan-results/result-$ACTION_START_TIME.json'
           echo "SCAN_RESULT=$SCAN_RESULT" >> $GITHUB_OUTPUT
-          EVENT_DETAIL='events/event-${{steps.run_tests.outputs.ACTION_START_TIME}}.json'
+          EVENT_DETAIL='events/event-$ACTION_START_TIME.json'
           echo "EVENT_DETAIL=$EVENT_DETAIL" >> $GITHUB_OUTPUT
         id: run_tests
       - name: Checkout 🛎️
@@ -38,10 +39,10 @@ jobs:
         run: |          
           cat "results.json" >>"${{steps.run_tests.outputs.SCAN_RESULT}}"
           echo "${{steps.run_tests.outputs.SCAN_RESULT}} has been created!"
-      - name: Storing push event details
+      - name: Storing event details
         id: store_event_details
         run: |
-           cat ${{ github.event_path }}>>""${{steps.run_tests.outputs.EVENT_DETAIL}}"    
+           cat ${{ github.event_path }}>>"${{steps.run_tests.outputs.EVENT_DETAIL}}"    
            echo "${{steps.run_tests.outputs.EVENT_DETAIL}} has been created!"
       - name: Creating Scan Details
         run: |
