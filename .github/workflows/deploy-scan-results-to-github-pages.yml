@@ -7,9 +7,10 @@ on:
 permissions:
   contents: write
 env:
-  scan_index: 'auditing/scan_index.json'
-  audit_file: 'gh-pages/auditing/index.json'
-  index: 'auditing/index.json'
+  base_folder: 'auditing'
+  auditing_item: 'auditing/auditing_item.json'
+  temp_audit_file: 'auditing/temp_auditing.json'
+  audit_file: 'gh-pages/auditing/auditing.json'
   
 jobs:
   build-and-deploy:
@@ -57,9 +58,9 @@ jobs:
               echo '"Event_Name": "${{ github.event_name }}",'
               echo '"Event_Path": "${{ steps.store_event_details.outputs.EVENT_DETAIL }}"'
               echo '},'
-            }  >>"$scan_index"
+            }  >>"$auditing_item"
 
-            echo "$scan_index has been created!"            
+            echo "$auditing_item has been created!"            
       - name: Checkout gh 🛎️
         uses: actions/checkout@v3
         with:
@@ -78,16 +79,16 @@ jobs:
               }  >>"$audit_file"
            fi
            # copy audit file except the last line which is '}' character of json 
-           head -n -1 "$audit_file" > "$index"
-           cat "$scan_index" >>"$index"
+           head -n -1 "$audit_file" > "$temp_audit_file"
+           cat "$auditing_item" >>"$temp_audit_file"
            cat 
            {
               echo ''
               echo ']}'
-            } >>"$index"
-           echo "$index has been created!"
+            } >>"$temp_audit_file"
+           echo "$temp_audit_file has been created!"
            # remove tmp
-           rm -f $scan_index
+           rm -f $auditing_item
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
