@@ -20,9 +20,9 @@ jobs:
         run: |
           ACTION_START_TIME=$(date +%s)
           echo "ACTION_START_TIME=$ACTION_START_TIME" >> $GITHUB_OUTPUT
-          SCAN_RESULT='scan-results/result-$ACTION_START_TIME.json'
+          SCAN_RESULT="scan-results/result-$ACTION_START_TIME.json"
           echo "SCAN_RESULT=$SCAN_RESULT" >> $GITHUB_OUTPUT
-          EVENT_DETAIL='events/event-$ACTION_START_TIME.json'
+          EVENT_DETAIL="events/event-$ACTION_START_TIME.json"
           echo "EVENT_DETAIL=$EVENT_DETAIL" >> $GITHUB_OUTPUT
         id: run_tests
       - name: Checkout 🛎️
