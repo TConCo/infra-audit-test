@@ -69,7 +69,12 @@ jobs:
            ref: gh-pages
            path: gh-pages
       - name: Adding Scan Details to Audit db
-        run: |         
+        run: |   
+           audit_file_content="abc.json"
+           if [ -f $audit_file ]; then
+              echo "$audit_file does exist!"
+              cat "$audit_file" >>"$audit_file_content"
+           fi
            if [ ! -f $audit_file ]; then
               echo "$audit_file doesn't exist, creating an empty one!"
               cat 
@@ -78,10 +83,11 @@ jobs:
                 echo '"Pushes" : ['
                 echo ']}'
                 
-              }  >>"$audit_file"
+              }  >>"$audit_file_content"
            fi
+           
            # copy audit file except the last line which is '}' character of json 
-           head -n -1 "$audit_file" > "$temp_audit_file"
+           head -n -1 "$audit_file_content" > "$temp_audit_file"
            cat "$auditing_item" >>"$temp_audit_file"
            cat 
            {
