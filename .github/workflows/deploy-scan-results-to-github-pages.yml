@@ -7,9 +7,9 @@ on:
 permissions:
   contents: write
 env:
-  scan_index: 'scan-results/scan_index.json'
-  audit_file: 'gh-pages/index.json'
-  index: 'scan-results/index.json'
+  scan_index: 'auditing/scan_index.json'
+  audit_file: 'gh-pages/auditing/index.json'
+  index: 'auditing/index.json'
   
 jobs:
   build-and-deploy:
@@ -92,5 +92,5 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: scan-results
+          folder: auditing
           clean: false
